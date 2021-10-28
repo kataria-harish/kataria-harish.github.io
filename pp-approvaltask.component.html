@@ -1,0 +1,95 @@
+<div>
+    <label class="split-if-else-block-header" (click)="approvalTab1()">Tab1</label>&nbsp;
+    <label class="split-if-else-block-header" (click)="approvalTab2()"> Tab2</label>
+</div>
+<div class="approval-tasks" *ngIf="approvalTaskTab1">
+    <label for="name" class="approval-section-header">Task results</label>
+    <div class="input-group branch" *ngFor="let branch of allowedActions">
+        <input type="text" class="form-control" placeholder="Result"  [(ngModel)]="branch.name"  (focusout)="onBranchUpdate()" (keyup.enter)="onBranchUpdate()" value="{{branch.name}}"
+            aria-label="Branch 1">
+        <div class="input-group-append">
+            <span class="input-group-text">
+                <div class="bx-pw-action-dropdown w-auto">
+                    <div class="dropdown-input" data-toggle="dropdown"><span class="bxpw-icon-span"><i
+                                class="bxpw-icon-overflow"></i></span></div>
+                    <ul class="dropdown-menu content-menu">
+                        <li class="dropdown-li"><a class="dropdown-link"  (click)="onResultEditClick($event)">Edit</a></li>
+                        <li class="dropdown-li"><a class="dropdown-link" (click)="onBranchDelete(branch)">Delete</a>
+                        </li>
+                    </ul>
+                </div>
+            </span>
+        </div>
+    </div>
+    <div class="split-if-else-block-header">
+        <a (click)="addResultClick()">Add an outcome</a>
+    </div>    
+</div>
+<div class="approval-tasks" *ngIf="approvalTaskTab2">
+    <label for="name" class="approval-section-header">Assignment</label>
+    <div class="split-logic-radio-btn-selection common-radio-selection">
+        <div class="kr-sg-radiobutton d-block">
+            <input id="radio-sr" name="radio-type" class="radio-custom" type="radio" checked
+                [(ngModel)]="assignmentType" 
+                (change)="onAssignmentTypeChange($event)"
+                value="SR">
+            <label for="radio-sr" class="radio-custom-label">Single recipient</label>
+            <!-- <div class="split-logic-radio-desc">All branches are exectued simulaneously</div> -->
+        </div>
+        <div class="kr-sg-radiobutton d-block">
+            <input id="radio-mr" name="radio-type" class="radio-custom" type="radio"
+             [(ngModel)]="assignmentType"
+             (change)="onAssignmentTypeChange($event)"
+                value="MR">
+            <label for="radio-mr" class="radio-custom-label">Multiple recipients</label>
+            <!-- <div class="split-logic-radio-desc">All branches are exectued simulaneously</div> -->
+        </div>
+        <div class="kr-sg-radiobutton d-block">
+            <input id="radio-g" name="radio-type" class="radio-custom" type="radio"
+             [(ngModel)]="assignmentType"
+             (change)="onAssignmentTypeChange($event)"
+                value="G">
+            <label for="radio-g" class="radio-custom-label">Group</label>
+            <!-- <div class="split-logic-radio-desc">All branches are exectued simulaneously</div> -->
+        </div>
+    </div>
+
+    <div>
+    <label for="name" class="approval-section-header">Recipient ID</label>
+    <div class="input-group branch">
+        <input type="text" class="form-control" placeholder="Comma separated email-IDs" aria-label="Branch 1">
+            <div class="input-group-append">
+                <span class="input-group-text">
+                    <div class="bx-pw-action-dropdown w-auto">
+                        <div class="dropdown-input" data-toggle="dropdown"><span class="bxpw-icon-span"><i
+                                    class="bxpw-icon-overflow"></i></span></div>
+                        
+                    </div>
+                </span>
+            </div>
+    </div>
+    </div>
+
+    <div *ngIf="assignmentType!=='SR'">
+        <label for="name" class="approval-logic-header">Assignment Logic</label>
+        <div class="split-logic-radio-btn-selection common-radio-selection">
+        <div class="kr-sg-radiobutton d-block">
+            <input id="radio-rr" name="radio-logic" class="radio-custom" type="radio" checked
+                [(ngModel)]="node.gatewayName" 
+                (change)="onAssignmentLogicChange($event)"
+                value="RR">
+            <label for="radio-rr" class="radio-custom-label">Round Robin</label>
+            <div class="split-logic-radio-desc">This assigns task to all users</div>
+        </div>
+        <div class="kr-sg-radiobutton d-block">
+            <input id="radio-lo" name="radio-logic" class="radio-custom" type="radio"
+             [(ngModel)]="node.gatewayName"
+             (change)="onAssignmentLogicChange($event)"
+                value="LO">
+            <label for="radio-lo" class="radio-custom-label">Least occupied</label>
+            <div class="split-logic-radio-desc">Assign to the person least occupied</div>
+        </div>
+        </div>
+    </div>
+
+</div>
